@@ -1,0 +1,909 @@
+title: Phone
+wallpanel_screensaver:
+  enabled: true
+  hide_toolbar: true
+  idle_time: 0
+views:
+  - theme: Backend-selected
+    title: Home
+    path: home
+    icon: mdi:home
+    type: custom:vertical-layout
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: script.homefade
+            name: Home
+            content_info: name
+            use_entity_picture: true
+            tap_action:
+              action: toggle
+          - type: entity
+            entity: script.leaving
+            content_info: name
+            use_entity_picture: true
+            tap_action:
+              action: toggle
+          - type: entity
+            entity: script.going_to_bed
+            content_info: name
+            tap_action:
+              action: toggle
+          - type: entity
+            entity: script.good_night
+            content_info: name
+            tap_action:
+              action: toggle
+        alignment: justify
+      - square: false
+        columns: 2
+        type: grid
+        cards:
+          - type: custom:button-card
+            show_state: true
+            name: Lights
+            layout: name_state
+            icon: hass:lightbulb
+            entity: sensor.count_lights_on
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/lights
+          - type: custom:button-card
+            name: Media Control
+            icon: hass:television
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/tv-control
+      - camera_view: auto
+        type: picture-glance
+        title: Front Door
+        image: https://demo.home-assistant.io/stub_config/kitchen.png
+        entities:
+          - entity: switch.porch_light
+          - entity: switch.garage_lights
+          - entity: cover.garage_door
+        camera_image: camera.front_door
+        aspect_ratio: '16:9'
+        entity: camera.front_door
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: My Title
+            card:
+              type: vertical-stack
+              cards:
+                - type: picture-entity
+                  entity: camera.front_door
+                  camera_view: live
+                - type: entities
+                  entities:
+                    - switch.porch_light
+                    - switch.garage_lights
+                    - cover.garage_door
+      - type: thermostat
+        entity: climate.hallway
+        name: Home
+  - theme: Blur_Popups
+    title: Lights
+    path: lights
+    icon: mdi:lightbulb
+    type: custom:vertical-layout
+    layout: {}
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:keyboard-backspace
+          - type: entity
+            entity: sensor.count_lights_on
+            icon: mdi:lightbulb-group
+        alignment: justify
+      - type: custom:mushroom-light-card
+        entity: light.living_room_lights
+        hide_state: false
+        show_brightness_control: true
+        use_light_color: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+        double_tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Living Room
+            large: true
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:mushroom-light-card
+                  entity: light.living_room_1
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: light.living_room_2
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: light.living_room_overhead
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: switch.living_room_fan
+                  hide_state: false
+                  show_brightness_control: false
+                  use_light_color: false
+                  show_color_control: false
+                  show_color_temp_control: false
+      - type: custom:mushroom-light-card
+        entity: light.kitchen_counter_lights
+        use_light_color: true
+        show_brightness_control: true
+        name: Kitchen
+        hide_state: false
+        show_color_temp_control: true
+        collapsible_controls: true
+        show_color_control: true
+        double_tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Living Room Lights
+            large: true
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:mushroom-light-card
+                  entity: light.kitchen_cabinet_lights
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: light.kitchen_counter_lights
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: false
+                - type: custom:mushroom-light-card
+                  entity: light.sink
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: false
+                - type: custom:mushroom-light-card
+                  entity: light.kitchen_overhead
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: false
+                  show_color_control: false
+                  show_color_temp_control: false
+      - type: custom:mushroom-light-card
+        entity: light.bedroom_lights
+        use_light_color: true
+        show_brightness_control: true
+        name: Master bedroom
+        hide_state: false
+        show_color_temp_control: true
+        collapsible_controls: true
+        show_color_control: true
+        double_tap_action:
+          action: fire-dom-event
+          browser_mod:
+            command: popup
+            title: Master Bedroom Lights
+            large: true
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:mushroom-light-card
+                  entity: light.jeremys_light
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: light.ambers_light
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+                - type: custom:mushroom-light-card
+                  entity: switch.bedroom_fan
+                  hide_state: false
+                  show_brightness_control: true
+                  use_light_color: true
+                  show_color_control: true
+                  show_color_temp_control: true
+      - type: custom:mushroom-light-card
+        entity: light.studio
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+      - type: custom:mushroom-light-card
+        entity: light.mekhis_room
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: switch.porch_light
+            use_entity_picture: false
+            hide_icon: false
+            fill_container: false
+            tap_action:
+              action: toggle
+          - type: custom:mushroom-entity-card
+            entity: switch.garage_lights
+            tap_action:
+              action: toggle
+  - theme: Backend-selected
+    title: TV Control
+    path: tv-control
+    icon: mdi:television
+    type: custom:vertical-layout
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:arrow-left
+      - square: false
+        columns: 2
+        type: grid
+        cards:
+          - type: custom:button-card
+            icon: mdi:sofa
+            name: Living Room
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/living-room
+          - type: custom:button-card
+            icon: mdi:bed
+            name: Master Bed
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/master-bed
+          - type: custom:button-card
+            icon: mdi:speaker
+            name: Studio
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/studio
+          - type: custom:button-card
+            icon: mdi:bed-outline
+            name: Mekhi's Room
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/mekhis-room
+  - theme: Backend-selected
+    title: Living Room
+    path: living-room
+    icon: mdi:sofa
+    type: custom:vertical-layout
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/tv-control
+            icon: mdi:arrow-left
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:home
+        alignment: justify
+      - type: custom:roku-card
+        entity: remote.hubba_bubba
+        name: Living Room TV
+        tv: true
+        power:
+          tap_action:
+            action: toggle
+            haptic: light
+        home:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: xbox
+              device: 46041100
+        back:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: back
+              device: 46041100
+        info:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: View
+              device: 46041100
+        forward:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: FastForward
+              device: 46041100
+        reverse:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: Rewind
+              device: 46041100
+        play:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: A
+              device: 46041100
+        volume_up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: VolumeUp
+              device: 63970696
+              num_repeats: 3
+          hold_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: VolumeUp
+              device: 63970696
+            repeat: 10
+        volume_down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: VolumeDown
+              device: 63970696
+              num_repeats: 3
+          hold_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: VolumeDown
+              device: 63970696
+            repeat: 10
+        mute:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: Mute
+              device: 63970696
+        up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: DirectionUp
+              device: 46041100
+        down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: DirectionDown
+              device: 46041100
+        left:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: DirectionLeft
+              device: 46041100
+        right:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: DirectionRight
+              device: 46041100
+        select:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.hubba_bubba
+              command: ok
+              device: 46041100
+  - theme: Backend-selected
+    title: Master Bed
+    path: master-bed
+    icon: mdi:bed
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/tv-control
+            icon: mdi:arrow-left
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:home
+        alignment: justify
+      - type: custom:roku-card
+        entity: remote.bedroomtv
+        name: Master Bed TV
+        tv: true
+        power:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: power
+        home:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: home
+        back:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: back
+        info:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: info
+        forward:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: forward
+        reverse:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: reverse
+        play:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: play
+        volume_up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: volume_up
+        volume_down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: volume_down
+        mute:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: mute
+        up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: up
+        down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: down
+        left:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: left
+        right:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: right
+        select:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.bedroomtv
+              command: select
+  - theme: Backend-selected
+    title: Studio
+    path: studio
+    icon: mdi:speaker
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/tv-control
+            icon: mdi:arrow-left
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:home
+        alignment: justify
+      - type: custom:roku-card
+        entity: remote.studiotv
+        tv: true
+        name: Studio TV
+        power:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: power
+        home:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: home
+        back:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: back
+        info:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: info
+        forward:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: forward
+        reverse:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: reverse
+        play:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: play
+        volume_up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: volume_up
+        volume_down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: volume_down
+        mute:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: mute
+        up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: up
+        down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: down
+        left:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: left
+        right:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: right
+        select:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.studiotv
+              command: select
+  - theme: Backend-selected
+    title: Mekhi's Room
+    path: mekhis-room
+    icon: mdi:bed-outline
+    badges: []
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone/tv-control
+            icon: mdi:arrow-left
+          - type: action
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-phone
+            icon: mdi:home
+        alignment: justify
+      - type: custom:roku-card
+        entity: remote.mekhisroom
+        tv: true
+        name: Mekhi's Room
+        power:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: power
+        home:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: home
+        back:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: back
+        info:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: info
+        forward:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: forward
+        reverse:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: reverse
+        play:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: play
+        volume_up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: volume_up
+        volume_down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: volume_down
+        mute:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: mute
+        up:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: up
+        down:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: down
+        left:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: left
+        right:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: right
+        select:
+          tap_action:
+            action: call-service
+            haptic: light
+            service: remote.send_command
+            service_data:
+              entity_id: remote.mekhisroom
+              command: select
